@@ -2,3 +2,4 @@
 *.vcxproj.filters
 *.vcxproj.user
 /.vs
+/lab_1/Debug
