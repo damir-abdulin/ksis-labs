@@ -1,5 +1,8 @@
 #include "MAC_address.h"
 
+#define MALLOC(x) HeapAlloc(GetProcessHeap(), 0, (x))
+#define FREE(x) HeapFree(GetProcessHeap(), 0, (x))
+
 /// <summary>
 /// Print network adapters MAC-addresses by GetAdaptersInfo()
 /// </summary>
