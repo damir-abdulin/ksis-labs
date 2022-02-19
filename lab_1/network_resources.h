@@ -13,5 +13,5 @@
 #pragma comment(lib, "netapi32.lib")
 
 void NetErrorHandler(DWORD, LPSTR);
-void DisplayStruct(int, LPNETRESOURCE);
+void DisplayStruct(LPNETRESOURCE);
 BOOL printAllDevices(LPNETRESOURCE);

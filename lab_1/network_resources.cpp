@@ -3,7 +3,12 @@
 #define MALLOC(x) HeapAlloc(GetProcessHeap(), 0, (x))
 #define FREE(x) HeapFree(GetProcessHeap(), 0, (x))
 
-BOOL printAllDevices(LPNETRESOURCE lpnr) {
+/// <summary>
+/// Print info about all network resources
+/// </summary>
+/// <param name="lpnr">is point to container. In start should be NULL</param>
+/// <returns>Return true(1) if all resources was printed</returns>
+BOOL printNetworkResources(LPNETRESOURCE lpnr) {
     DWORD dwResult;
     HANDLE hEnum;
     DWORD cbBuffSize = 16384;
@@ -24,10 +29,13 @@ BOOL printAllDevices(LPNETRESOURCE lpnr) {
         dwResult = WNetEnumResource(hEnum, &cEntries, lpLocalResource, &cbBuffSize);
 
         if (dwResult == NO_ERROR) {
-            for (int i = 0; i < cEntries; i++)
+            for (int i = 0; i < cEntries; i++) {
                 DisplayStruct(i, &lpLocalResource[i]);
 
-
+                // Open container.
+                if (RESOURCEUSAGE_CONTAINER == (lpLocalResource[i].dwUsage & RESOURCEUSAGE_CONTAINER))
+                    printAllDevices(&lpLocalResource[i]);
+            }
         }
         else if (dwResult != ERROR_NO_MORE_ITEMS) {
             NetErrorHandler(dwResult, (LPSTR)"WNetEnumResource");
@@ -47,7 +55,11 @@ BOOL printAllDevices(LPNETRESOURCE lpnr) {
     return TRUE;
 }
 
-
+/// <summary>
+/// Decode error code
+/// </summary>
+/// <param name="errorNum">is error code</param>
+/// <param name="funcName">is function name which return error</param>
 void NetErrorHandler(DWORD errorNum, LPSTR funcName) {
     printf("[%s][ERROR:%d] ", funcName, errorNum);
 
@@ -68,7 +80,11 @@ void NetErrorHandler(DWORD errorNum, LPSTR funcName) {
     }
 }
 
-void DisplayStruct(int i, LPNETRESOURCE lpnrLocal)
+/// <summary>
+/// Print information about resource
+/// </summary>
+/// <param name="lpnrLocal">is point to resource</param>
+void DisplayStruct(LPNETRESOURCE lpnrLocal)
 {
     printf("\tScope: ");
     switch (lpnrLocal->dwScope) {
@@ -102,7 +118,7 @@ void DisplayStruct(int i, LPNETRESOURCE lpnrLocal)
         break;
     }
 
-    printf("\tDisplayType: ", i);
+    printf("\tDisplayType: ");
     switch (lpnrLocal->dwDisplayType) {
     case (RESOURCEDISPLAYTYPE_GENERIC):
         printf("generic\n");
