@@ -14,4 +14,4 @@
 
 void NetErrorHandler(DWORD, LPSTR);
 void DisplayStruct(LPNETRESOURCE);
-BOOL printAllDevices(LPNETRESOURCE);
+BOOL printNetworkResources(LPNETRESOURCE);

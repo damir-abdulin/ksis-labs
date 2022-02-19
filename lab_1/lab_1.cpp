@@ -9,7 +9,6 @@ int main()
     printAdapters();
 
     printf("Enumerate network resources");
-    LPNETRESOURCE lpnr = NULL;
-    printAllDevices(lpnr);
+    printNetworkResources(NULL);
 }
 

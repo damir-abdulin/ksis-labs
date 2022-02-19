@@ -29,12 +29,12 @@ BOOL printNetworkResources(LPNETRESOURCE lpnr) {
         dwResult = WNetEnumResource(hEnum, &cEntries, lpLocalResource, &cbBuffSize);
 
         if (dwResult == NO_ERROR) {
-            for (int i = 0; i < cEntries; i++) {
-                DisplayStruct(i, &lpLocalResource[i]);
+            for (DWORD i = 0; i < cEntries; i++) {
+                DisplayStruct(&lpLocalResource[i]);
 
                 // Open container.
                 if (RESOURCEUSAGE_CONTAINER == (lpLocalResource[i].dwUsage & RESOURCEUSAGE_CONTAINER))
-                    printAllDevices(&lpLocalResource[i]);
+                    printNetworkResources(&lpLocalResource[i]);
             }
         }
         else if (dwResult != ERROR_NO_MORE_ITEMS) {
