@@ -36,6 +36,7 @@ int printAdapters() {
 
     if (GetAdaptersInfo(pAdapterInfo, &ulOutBufLen) == NO_ERROR) {
         while (pAdapterInfo) {
+            // Process all adapters.
             printAdpaterInfo(pAdapterInfo);
 
             pAdapterInfo = pAdapterInfo->Next;
@@ -53,13 +54,14 @@ int printAdapters() {
 }
 
 /// <summary>
-/// 
+/// Show important information about adapter
 /// </summary>
-/// <param name="pAdapter"></param>
-/// <returns></returns>
+/// <param name="pAdapter">Pointer to adapter</param>
 void printAdpaterInfo(PIP_ADAPTER_INFO pAdapter) {
     printf("\tAdapter Name: \t%s\n", pAdapter->AdapterName);
     printf("\tAdapter Desc: \t%s\n", pAdapter->Description);
+
+    // Print MAC address.
     printf("\tAdapter Addr: \t");
     for (UINT i = 0; i < pAdapter->AddressLength; i++) {
         if (i != (pAdapter->AddressLength - 1))
