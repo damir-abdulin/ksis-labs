@@ -38,7 +38,6 @@ int printAdapters() {
         while (pAdapterInfo) {
             printAdpaterInfo(pAdapterInfo);
 
-            printf("\n");
             pAdapterInfo = pAdapterInfo->Next;
         }
     }
@@ -68,9 +67,11 @@ void printAdpaterInfo(PIP_ADAPTER_INFO pAdapter) {
         else
             printf("%.2X\n", (int)pAdapter->Address[i]);
     }
+    printf("\n");
 }
 
 int main()
 {
+    printf("Get Adapters MAC addresses:\n");
     printAdapters();
 }
